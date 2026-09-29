@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}Кабінет{% endblock %}
+
+{% block content %}
+<section class="site-main--inner">
+    <div class="container account-layout">
+        <div class="account-card">
+            <span class="eyebrow">Особистий кабінет</span>
+            <h1>Мій профіль</h1>
+            <form method="post" class="auth-form account-form">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                <div class="form-field">
+                    <label for="id_username">Ім’я користувача</label>
+                    {{ form.username }}
+                    {{ form.username.errors }}
+                </div>
+                <div class="form-field">
+                    <label for="id_email">Email</label>
+                    {{ form.email }}
+                    {{ form.email.errors }}
+                </div>
+                <div class="form-field">
+                    <label for="id_first_name">Ім’я</label>
+                    {{ form.first_name }}
+                </div>
+                <div class="form-field">
+                    <label for="id_last_name">Прізвище</label>
+                    {{ form.last_name }}
+                </div>
+                <div class="form-field">
+                    <label for="id_phone">Телефон</label>
+                    {{ form.phone }}
+                </div>
+                <div class="form-field">
+                    <label for="id_city">Місто</label>
+                    {{ form.city }}
+                </div>
+                <button type="submit" class="btn btn-gold">Зберегти дані</button>
+            </form>
+        </div>
+
+        <div class="account-card account-card--secondary">
+            <span class="eyebrow">Улюблені товари</span>
+            <h2>Моя колекція</h2>
+            {% if favorites %}
+            <div class="favorite-list">
+                {% for perfume in favorites %}
+                <article class="favorite-item">
+                    <a href="{{ perfume.get_absolute_url }}" class="favorite-item__link">
+                        {% if perfume.image_url %}
+                        <img src="{{ perfume.image_url }}" alt="{{ perfume.name }}">
+                        {% endif %}
+                        <div>
+                            <h3>{{ perfume.name }}</h3>
+                            <p>{{ perfume.brand.name }} · {{ perfume.price }} грн</p>
+                        </div>
+                    </a>
+                    <form method="post" action="{% url 'pages:toggle_favorite' perfume.pk %}" class="js-favorite-toggle favorite-item__remove-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                        <button type="submit" class="text-button">Видалити</button>
+                    </form>
+                </article>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="empty-state">Поки що немає збережених товарів.</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

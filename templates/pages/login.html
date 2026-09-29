@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Вхід{% endblock %}
+
+{% block content %}
+<section class="site-main--inner">
+    <div class="container auth-layout">
+        <div class="auth-card">
+            <span class="eyebrow">Поверніться до покупок</span>
+            <h1>Вхід</h1>
+            <form method="post" class="auth-form">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                <div class="form-field">
+                    <label for="id_username">Ім’я користувача</label>
+                    {{ form.username }}
+                </div>
+                <div class="form-field">
+                    <label for="id_password">Пароль</label>
+                    {{ form.password }}
+                </div>
+                <button type="submit" class="btn btn-gold">Увійти</button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

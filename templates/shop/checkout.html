@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load shop_tags %}
+
+{% block title %}Оформлення замовлення{% endblock %}
+
+{% block content %}
+<section class="site-main--inner">
+    <div class="container checkout-page">
+        <h1 class="page-title">Оформлення замовлення</h1>
+        <div class="checkout-layout">
+            <form method="post" class="checkout-form" data-np-endpoint="{% url 'shop:nova_poshta_autofill' %}">
+                {% csrf_token %}
+                {{ form.city_ref }}
+                {{ form.warehouse_ref }}
+                <h2>Контактні дані та доставка</h2>
+                {% for field in form %}
+                {% if field.is_hidden %}
+                {% else %}
+                <div class="form-field{% if field.errors %} form-field--error{% endif %}">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.name == 'city' %}
+                    <div class="np-suggestions" id="np-city-suggestions" role="listbox" hidden></div>
+                    <p class="form-help" data-np-city-help>Почніть вводити місто та оберіть варіант зі списку.</p>
+                    {% elif field.name == 'delivery_address' %}
+                    <div class="np-suggestions" id="np-warehouse-suggestions" role="listbox" hidden></div>
+                    <p class="form-help" data-np-warehouse-help>Спочатку оберіть місто, потім відділення або поштомат.</p>
+                    {% endif %}
+                    {% for error in field.errors %}<p class="form-error">{{ error }}</p>{% endfor %}
+                </div>
+                {% endif %}
+                {% endfor %}
+                <button type="submit" class="btn btn-gold">Підтвердити замовлення</button>
+            </form>
+
+            <aside class="cart-summary">
+                <h2>Ваше замовлення</h2>
+                <ul class="checkout-items">
+                    {% for item in items %}
+                    <li><span>{{ item.perfume.name }} ({% if item.variant %}{{ item.variant.volume_ml }}{% else %}{{ item.perfume.volume_ml }}{% endif %} мл) × {{ item.quantity }}</span><strong>{{ item.subtotal|currency }}</strong></li>
+                    {% endfor %}
+                </ul>
+                <p><span>Сума товарів</span><strong>{{ total|currency }}</strong></p>
+                <p class="cart-summary__note">Після отримання замовлення ми зв'яжемося з вами для уточнення доставки та оплати.</p>
+            </aside>
+        </div>
+    </div>
+</section>
+{% endblock %}

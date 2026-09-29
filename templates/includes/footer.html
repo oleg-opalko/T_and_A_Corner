@@ -2,9 +2,9 @@
     <div class="container footer-grid">
         <div class="footer-brand">
             <a href="{% url 'pages:home' %}" class="logo">T&amp;A CORNER</a>
-            <p>Luxury fragrances crafted for those who appreciate the details.</p>
+            <p>Розкішні аромати для тих, хто цінує деталі.</p>
             <div class="social-links">
-                <a href="#" aria-label="Instagram">
+                <a href="https://www.instagram.com/t_and_a_corner" target="_blank" rel="noopener noreferrer" aria-label="Instagram T&A Corner">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                         <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.5"/>
                         <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/>
@@ -25,44 +25,44 @@
         </div>
 
         <div class="footer-col">
-            <h4>Shop</h4>
+            <h4>Магазин</h4>
             <ul>
-                <li><a href="{% url 'shop:catalog' %}">All Fragrances</a></li>
-                <li><a href="{% url 'shop:catalog' %}">Best Sellers</a></li>
-                <li><a href="{% url 'shop:catalog' %}">New Arrivals</a></li>
-                <li><a href="{% url 'shop:catalog' %}">Gift Sets</a></li>
-                <li><a href="{% url 'shop:catalog' %}">Accessories</a></li>
+                <li><a href="{% url 'shop:catalog' %}">Усі аромати</a></li>
+                <li><a href="{% url 'shop:catalog' %}">Бестселери</a></li>
+                <li><a href="{% url 'shop:catalog' %}">Новинки</a></li>
+                <li><a href="{% url 'shop:catalog' %}">Подарункові набори</a></li>
+                <li><a href="{% url 'shop:catalog' %}">Аксесуари</a></li>
             </ul>
         </div>
 
         <div class="footer-col">
-            <h4>Help</h4>
+            <h4>Допомога</h4>
             <ul>
-                <li><a href="#">FAQ</a></li>
-                <li><a href="#">Shipping &amp; Delivery</a></li>
-                <li><a href="#">Returns &amp; Exchanges</a></li>
-                <li><a href="#">Payment Methods</a></li>
-                <li><a href="{% url 'pages:contact' %}">Contact Us</a></li>
+                <li><a href="#">Запитання й відповіді</a></li>
+                <li><a href="#">Доставка</a></li>
+                <li><a href="#">Повернення та обмін</a></li>
+                <li><a href="#">Способи оплати</a></li>
+                <li><a href="{% url 'pages:contact' %}">Зв'язатися з нами</a></li>
             </ul>
         </div>
 
         <div class="footer-col">
-            <h4>About</h4>
+            <h4>Про бренд</h4>
             <ul>
-                <li><a href="{% url 'pages:about' %}">Our Story</a></li>
-                <li><a href="#">Ingredients</a></li>
-                <li><a href="#">Sustainability</a></li>
-                <li><a href="#">Privacy Policy</a></li>
-                <li><a href="#">Terms &amp; Conditions</a></li>
+                <li><a href="{% url 'pages:about' %}">Наша історія</a></li>
+                <li><a href="#">Інгредієнти</a></li>
+                <li><a href="#">Сталий розвиток</a></li>
+                <li><a href="#">Політика конфіденційності</a></li>
+                <li><a href="#">Умови використання</a></li>
             </ul>
         </div>
 
         <div class="footer-newsletter">
-            <h4>Stay Connected</h4>
-            <p>Subscribe for exclusive offers and fragrance insights.</p>
+            <h4>Будьте на зв'язку</h4>
+            <p>Підпишіться, щоб отримувати ексклюзивні пропозиції та парфумерні поради.</p>
             <form class="newsletter-form" action="#" method="post">
-                <input type="email" name="email" placeholder="Your email address" required>
-                <button type="submit" aria-label="Subscribe">
+                <input type="email" name="email" placeholder="Ваша електронна пошта" required>
+                <button type="submit" aria-label="Підписатися">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                         <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
@@ -73,7 +73,7 @@
 
     <div class="footer-bottom">
         <div class="container">
-            <p>&copy; {% now "Y" %} T&amp;A Corner. All rights reserved.</p>
+            <p>&copy; {% now "Y" %} T&amp;A Corner. Усі права захищені.</p>
         </div>
     </div>
 </footer>

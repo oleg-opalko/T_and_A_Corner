@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Головна{% endblock %}
 
 {% block content %}
 <section class="hero" data-hero-slider>
@@ -9,33 +9,33 @@
         <div class="hero-content">
             <div class="hero-slides">
                 <div class="hero-slide is-active" data-slide="0">
-                    <span class="eyebrow">Exclusive Fragrances</span>
-                    <h1>Where elegance<br>meets mystery.</h1>
-                    <p>Luxury fragrances crafted for those who appreciate the details.</p>
+                    <span class="eyebrow">Ексклюзивні аромати</span>
+                    <h1>Де елегантність<br>зустрічається з таємницею.</h1>
+                    <p>Розкішні аромати для тих, хто цінує деталі.</p>
                     <a href="{% url 'shop:catalog' %}" class="btn btn-gold">
-                        Discover Collection
+                        Відкрити колекцію
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                             <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </a>
                 </div>
                 <div class="hero-slide" data-slide="1">
-                    <span class="eyebrow">Signature Scents</span>
-                    <h1>Timeless.<br>Distinct. Yours.</h1>
-                    <p>Discover exclusive blends designed to leave a lasting impression.</p>
+                    <span class="eyebrow">Авторські аромати</span>
+                    <h1>Позачасові.<br>Особливі. Ваші.</h1>
+                    <p>Відкрийте ексклюзивні композиції, що залишають незабутнє враження.</p>
                     <a href="{% url 'shop:catalog' %}" class="btn btn-gold">
-                        Explore Fragrances
+                        Переглянути аромати
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                             <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </a>
                 </div>
                 <div class="hero-slide" data-slide="2">
-                    <span class="eyebrow">Crafted With Passion</span>
-                    <h1>Every fragrance<br>tells a story.</h1>
-                    <p>Finest ingredients blended into enduring, unforgettable scents.</p>
+                    <span class="eyebrow">Створені з натхненням</span>
+                    <h1>Кожен аромат<br>розповідає історію.</h1>
+                    <p>Найкращі інгредієнти поєднані в стійкі та незабутні композиції.</p>
                     <a href="{% url 'pages:about' %}" class="btn btn-gold">
-                        Learn More
+                        Дізнатися більше
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                             <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
@@ -67,8 +67,8 @@
                 </svg>
             </div>
             <div>
-                <strong>Premium Quality</strong>
-                <span>Finest ingredients</span>
+            <strong>Преміальна якість</strong>
+                <span>Найкращі інгредієнти</span>
             </div>
         </div>
         <div class="feature-item">
@@ -79,8 +79,8 @@
                 </svg>
             </div>
             <div>
-                <strong>Long Lasting</strong>
-                <span>Enduring scents</span>
+                <strong>Стійкі аромати</strong>
+                <span>Тривале звучання</span>
             </div>
         </div>
         <div class="feature-item">
@@ -91,8 +91,8 @@
                 </svg>
             </div>
             <div>
-                <strong>Exclusive Blends</strong>
-                <span>Uniquely crafted</span>
+                <strong>Ексклюзивні композиції</strong>
+                <span>Унікально створені</span>
             </div>
         </div>
         <div class="feature-item">
@@ -103,8 +103,8 @@
                 </svg>
             </div>
             <div>
-                <strong>Secure Payment</strong>
-                <span>100% protected</span>
+                <strong>Безпечна оплата</strong>
+                <span>100% захищено</span>
             </div>
         </div>
         <div class="feature-item">
@@ -117,8 +117,8 @@
                 </svg>
             </div>
             <div>
-                <strong>Free Shipping</strong>
-                <span>On orders over $100</span>
+                <strong>Безкоштовна доставка</strong>
+                <span>Для замовлень від 4 000 грн</span>
             </div>
         </div>
         <div class="feature-item">
@@ -128,8 +128,8 @@
                 </svg>
             </div>
             <div>
-                <strong>Easy Returns</strong>
-                <span>Hassle-free returns</span>
+                <strong>Легке повернення</strong>
+                <span>Без зайвих турбот</span>
             </div>
         </div>
     </div>
@@ -138,8 +138,8 @@
 <section class="collection" id="collection">
     <div class="container">
         <div class="section-header">
-            <h2>Timeless. Distinct. Yours.</h2>
-            <a href="{% url 'shop:catalog' %}" class="link-arrow">View All</a>
+            <h2>Позачасові. Особливі. Ваші.</h2>
+            <a href="{% url 'shop:catalog' %}" class="link-arrow">Переглянути всі</a>
         </div>
 
         {% if featured_perfumes %}
@@ -158,7 +158,7 @@
                     <div class="product-card__body">
                         <h3>NOIR ÉCLAT</h3>
                         <p class="product-card__type">Extrait de Parfum</p>
-                        <p class="product-card__price">$180.00</p>
+                        <p class="product-card__price">7 200,00 грн</p>
                     </div>
                 </div>
             </article>
@@ -170,7 +170,7 @@
                     <div class="product-card__body">
                         <h3>AMBRE MINUIT</h3>
                         <p class="product-card__type">Extrait de Parfum</p>
-                        <p class="product-card__price">$180.00</p>
+                        <p class="product-card__price">7 200,00 грн</p>
                     </div>
                 </div>
             </article>
@@ -182,7 +182,7 @@
                     <div class="product-card__body">
                         <h3>VELOUR OUD</h3>
                         <p class="product-card__type">Extrait de Parfum</p>
-                        <p class="product-card__price">$180.00</p>
+                        <p class="product-card__price">7 200,00 грн</p>
                     </div>
                 </div>
             </article>
@@ -194,12 +194,12 @@
                     <div class="product-card__body">
                         <h3>LUNAR SHADOW</h3>
                         <p class="product-card__type">Extrait de Parfum</p>
-                        <p class="product-card__price">$180.00</p>
+                        <p class="product-card__price">7 200,00 грн</p>
                     </div>
                 </div>
             </article>
         </div>
-        <p class="collection-note">Add products via <a href="/admin/">admin panel</a> to replace demo cards.</p>
+        <p class="collection-note">Додайте товари через <a href="/admin/">адмінпанель</a>, щоб замінити демонстраційні картки.</p>
         {% endif %}
     </div>
 </section>
@@ -207,10 +207,10 @@
 <section class="story-section">
     <div class="container story-grid">
         <div class="story-content">
-            <span class="eyebrow">Crafted With Passion</span>
-            <h2>Every fragrance tells a story.</h2>
-            <p>At T&amp;A Corner, we believe that scent is the most intimate form of self-expression. Each bottle is a journey — from the first note to the lasting impression.</p>
-            <a href="{% url 'pages:about' %}" class="btn btn-outline">Learn More</a>
+            <span class="eyebrow">Створені з натхненням</span>
+            <h2>Кожен аромат розповідає історію.</h2>
+            <p>У T&amp;A Corner ми віримо, що аромат — найінтимніша форма самовираження. Кожен флакон — це подорож від першої ноти до незабутнього враження.</p>
+            <a href="{% url 'pages:about' %}" class="btn btn-outline">Дізнатися більше</a>
         </div>
         <div class="story-image"></div>
     </div>
@@ -225,15 +225,15 @@
                     <rect x="22" y="8" width="20" height="6" rx="1" stroke="currentColor" stroke-width="2"/>
                 </svg>
             </div>
-            <span class="eyebrow">Fragrance Guide</span>
-            <h3>Find your perfect scent</h3>
-            <span class="link-arrow">Take the Quiz</span>
+            <span class="eyebrow">Гід ароматів</span>
+            <h3>Знайдіть свій ідеальний аромат</h3>
+            <span class="link-arrow">Пройти тест</span>
         </a>
 
         <a href="{% url 'shop:catalog' %}" class="promo-card promo-card--gift">
-            <span class="eyebrow">Gift Sets</span>
-            <h3>The perfect gift</h3>
-            <span class="link-arrow">Explore Gift Sets</span>
+            <span class="eyebrow">Подарункові набори</span>
+            <h3>Ідеальний подарунок</h3>
+            <span class="link-arrow">Переглянути набори</span>
         </a>
     </div>
 </section>

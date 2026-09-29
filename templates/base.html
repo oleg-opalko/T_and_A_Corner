@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,12 +15,19 @@
     {% include 'includes/header.html' %}
 
     <main class="site-main">
+        {% if messages %}
+        <div class="container messages" aria-live="polite">
+            {% for message in messages %}
+            <p class="message message--{{ message.tags }}">{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
         {% block content %}{% endblock %}
     </main>
 
     {% include 'includes/footer.html' %}
 
-    <script src="{% static 'js/main.js' %}" defer></script>
+    <script src="{% static 'js/main.js' %}?v=variant-discounts-1" defer></script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>

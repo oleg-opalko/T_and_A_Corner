@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Перехід до оплати{% endblock %}
+
+{% block content %}
+<section class="site-main--inner">
+    <div class="container confirmation">
+        <h1>Переходимо до оплати</h1>
+        <p>Замовлення №{{ order.pk }} створено. Зараз відкриється сторінка безпечної оплати LiqPay.</p>
+        <form method="post" action="{{ payment.checkout_url }}" accept-charset="utf-8" class="payment-form" data-autosubmit>
+            <input type="hidden" name="data" value="{{ payment.data }}">
+            <input type="hidden" name="signature" value="{{ payment.signature }}">
+            <button type="submit" class="btn btn-gold">Оплатити замовлення</button>
+        </form>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.querySelector('[data-autosubmit]')?.submit();
+</script>
+{% endblock %}

@@ -2,22 +2,48 @@
 <article class="product-card">
     <a href="{{ perfume.get_absolute_url }}" class="product-card__link">
         <div class="product-card__image">
-            {% if perfume.image %}
-            <img src="{{ perfume.image.url }}" alt="{{ perfume.name }}">
+            <div class="product-card__badges">
+                {% if perfume.is_on_sale %}<span class="product-card__badge product-card__badge--sale">-{{ perfume.discount_percent }}%</span>{% endif %}
+                {% if perfume.is_new %}<span class="product-card__badge">Новинка</span>{% endif %}
+                {% if perfume.is_bestseller %}<span class="product-card__badge">Хіт продажів</span>{% endif %}
+            </div>
+            {% if perfume.image_url %}
+            <img src="{{ perfume.image_url }}" alt="{{ perfume.name }}">
             {% else %}
             <div class="product-card__placeholder" aria-hidden="true"></div>
             {% endif %}
-            <button class="product-card__cart" type="button" aria-label="Add to cart" onclick="event.preventDefault();">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <path d="M6 6h15l-1.5 9h-12L6 6Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-                    <path d="M6 6 5 3H2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                </svg>
-            </button>
         </div>
         <div class="product-card__body">
+            <p class="product-card__brand">{{ perfume.brand.name }}</p>
             <h3>{{ perfume.name|upper }}</h3>
             <p class="product-card__type">{{ perfume.product_type }}</p>
-            <p class="product-card__price">{{ perfume.price|currency }}</p>
+            <p class="product-card__meta">{{ perfume.volume_ml }} ml · {% if perfume.is_available %}У наявності{% else %}Немає в наявності{% endif %}</p>
+            {% if perfume.notes_top %}
+            <p class="product-card__notes">Ноти: {{ perfume.notes_top }}</p>
+            {% endif %}
+            {% if perfume.description %}
+            <p class="product-card__description">{{ perfume.description|truncatechars:90 }}</p>
+            {% endif %}
+            <p class="product-card__price">{% if perfume.is_on_sale %}<del>{{ perfume.regular_price|currency }}</del> {% endif %}{{ perfume.price|currency }}</p>
         </div>
     </a>
+    {% if user.is_authenticated %}
+    <form method="post" action="{% url 'pages:toggle_favorite' perfume.pk %}" class="product-card__favorite-form js-favorite-toggle">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+        <button class="product-card__favorite" type="submit" aria-label="{% if perfume.pk in favorite_ids %}Видалити {{ perfume.name }} з улюблених{% else %}Додати {{ perfume.name }} до улюблених{% endif %}">
+            {% if perfume.pk in favorite_ids %}♥{% else %}♡{% endif %}
+        </button>
+    </form>
+    {% endif %}
+    <form method="post" action="{% url 'shop:cart_add' perfume.pk %}" class="product-card__cart-form js-cart-add">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+        <button class="product-card__cart" type="submit" aria-label="Додати {{ perfume.name }} до кошика">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M6 6h15l-1.5 9h-12L6 6Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                <path d="M6 6 5 3H2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+        </button>
+    </form>
 </article>

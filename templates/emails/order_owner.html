@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+{% load shop_tags %}
+<html lang="uk">
+<body style="margin:0;padding:24px;background:#f7f1eb;color:#2f2925;font-family:Arial,sans-serif;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:640px;margin:0 auto;background:#fffaf5;border:1px solid #dfd3c6;">
+    <tr>
+      <td style="padding:24px;">
+        <h1 style="margin:0 0 16px;font-family:Georgia,serif;font-size:28px;font-weight:400;">Нове замовлення №{{ order.pk }}</h1>
+        <p style="margin:0 0 20px;">На сайті T&amp;A Corner щойно оформили замовлення.</p>
+
+        <h2 style="margin:24px 0 8px;font-size:16px;">Клієнт</h2>
+        <p style="margin:0;line-height:1.7;">
+          {{ order.full_name }}<br>
+          {{ order.phone }}<br>
+          {{ order.email }}
+        </p>
+
+        <h2 style="margin:24px 0 8px;font-size:16px;">Доставка й оплата</h2>
+        <p style="margin:0;line-height:1.7;">
+          {{ order.get_delivery_method_display }}<br>
+          {{ order.city }}<br>
+          {{ order.delivery_address }}<br>
+          {{ order.get_payment_method_display }}
+        </p>
+
+        <h2 style="margin:24px 0 8px;font-size:16px;">Товари</h2>
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+          {% for item in items %}
+          <tr>
+            <td style="padding:8px 0;border-bottom:1px solid #eadfd4;">{{ item.name }} × {{ item.quantity }}</td>
+            <td align="right" style="padding:8px 0;border-bottom:1px solid #eadfd4;">{{ item.subtotal|currency }}</td>
+          </tr>
+          {% endfor %}
+        </table>
+
+        <p style="margin:20px 0 0;font-size:18px;"><strong>Сума товарів: {{ order.subtotal|currency }}</strong></p>
+        <p style="margin:20px 0 0;color:#756b63;">Коментар: {{ order.comment|default:"—" }}</p>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Замовлення прийнято{% endblock %}
+
+{% block content %}
+<section class="site-main--inner">
+    <div class="container confirmation">
+        <span class="eyebrow">Дякуємо</span>
+        <h1>Замовлення №{{ order.pk }} прийнято.</h1>
+        {% if order.requires_online_payment %}
+            {% if order.payment_status == 'paid' %}
+            <p>Оплату отримано. Ми скоро візьмемо замовлення в обробку.</p>
+            {% else %}
+            <p>Замовлення створено, але онлайн-оплата ще не підтверджена.</p>
+            <a href="{% url 'shop:payment_start' order.pk %}" class="btn btn-gold">Перейти до оплати</a>
+            {% endif %}
+        {% else %}
+        <p>Ми зв'яжемося з вами найближчим часом, щоб підтвердити деталі доставки й оплати.</p>
+        {% endif %}
+        <a href="{% url 'shop:catalog' %}" class="btn btn-gold">Продовжити покупки</a>
+    </div>
+</section>
+{% endblock %}

@@ -8,25 +8,122 @@
     <div class="container">
         <article class="product-detail">
             <div class="product-detail__media">
-                {% if perfume.image %}
-                <img src="{{ perfume.image.url }}" alt="{{ perfume.name }}">
-                {% else %}
-                <div class="product-card__placeholder" aria-hidden="true"></div>
-                {% endif %}
+                <div class="product-detail__gallery">
+                    {% if perfume.image_url %}
+                    <img class="product-detail__main-image" src="{{ perfume.image_url }}" alt="{{ perfume.name }}">
+                    {% elif perfume.gallery %}
+                    <img class="product-detail__main-image" src="{{ perfume.gallery.0 }}" alt="{{ perfume.name }}">
+                    {% else %}
+                    <div class="product-card__placeholder" aria-hidden="true"></div>
+                    {% endif %}
+
+                    {% if perfume.gallery %}
+                    <div class="product-detail__thumbs">
+                        {% for image in perfume.gallery %}
+                        <img src="{{ image }}" alt="{{ perfume.name }} — фото {{ forloop.counter }}">
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
             </div>
+
             <div class="product-detail__info">
                 <p class="product-detail__brand">{{ perfume.brand.name }}</p>
                 <h1>{{ perfume.name }}</h1>
-                <p class="product-detail__meta">{{ perfume.category.name }} · {{ perfume.product_type }} · {{ perfume.volume_ml }} ml</p>
-                <p class="product-detail__price">{{ perfume.price|currency }}</p>
+                <p class="product-detail__meta">{{ perfume.category.name }} · {{ perfume.product_type }}</p>
+                <p class="product-detail__price" data-product-price>
+                    {% if variants %}
+                    <del data-regular-price{% if not variants.0.is_on_sale %} hidden{% endif %}>{% if variants.0.is_on_sale %}{{ variants.0.regular_price|currency }}{% endif %}</del>
+                    <span data-current-price>{{ variants.0.price|currency }}</span>
+                    {% else %}
+                    {% if perfume.is_on_sale %}<del>{{ perfume.regular_price|currency }}</del> {% endif %}{{ perfume.price|currency }}
+                    {% endif %}
+                </p>
+
+                <div class="product-detail__status-row">
+                    <span class="product-detail__badge">{% if perfume.is_available %}У наявності{% else %}Немає в наявності{% endif %}</span>
+                    {% if variants %}
+                    <span class="product-detail__badge" data-variant-discount{% if not variants.0.is_on_sale %} hidden{% endif %}>Знижка <span data-discount-percent>{{ variants.0.discount_percent }}</span>%</span>
+                    {% elif perfume.is_on_sale %}<span class="product-detail__badge">Знижка {{ perfume.discount_percent }}%</span>{% endif %}
+                    {% if perfume.is_new %}<span class="product-detail__badge">Новинка</span>{% endif %}
+                    {% if perfume.is_bestseller %}<span class="product-detail__badge">Хіт продажів</span>{% endif %}
+                    {% if not variants %}<span class="product-detail__volume">Об’єм: {{ perfume.volume_ml }} ml</span>{% endif %}
+                </div>
+
                 {% if perfume.description %}
                 <div class="product-detail__description">
+                    <h2>Опис</h2>
                     {{ perfume.description|linebreaks }}
                 </div>
                 {% endif %}
-                <button class="btn btn-gold" type="button">Add to Cart</button>
+
+                {% if perfume.notes_top or perfume.notes_middle or perfume.notes_base %}
+                <div class="product-detail__notes">
+                    <h2>Ноти аромату</h2>
+                    <div class="product-detail__notes-grid">
+                        {% if perfume.notes_top %}
+                        <div>
+                            <span>Верхні</span>
+                            <p>{{ perfume.notes_top }}</p>
+                        </div>
+                        {% endif %}
+                        {% if perfume.notes_middle %}
+                        <div>
+                            <span>Середні</span>
+                            <p>{{ perfume.notes_middle }}</p>
+                        </div>
+                        {% endif %}
+                        {% if perfume.notes_base %}
+                        <div>
+                            <span>Базові</span>
+                            <p>{{ perfume.notes_base }}</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if user.is_authenticated %}
+                <form method="post" action="{% url 'pages:toggle_favorite' perfume.pk %}" class="product-detail__favorite-form js-favorite-toggle">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                    <button class="btn btn-outline" type="submit">{% if perfume.pk in favorite_ids %}Видалити з улюблених{% else %}Додати до улюблених{% endif %}</button>
+                </form>
+                {% endif %}
+                <form method="post" action="{% url 'shop:cart_add' perfume.pk %}" class="product-detail__cart-form js-cart-add">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                    {% if variants %}
+                    <fieldset class="product-detail__variants">
+                        <legend>Оберіть об’єм</legend>
+                        {% for variant in variants %}
+                        <input id="variant-{{ variant.pk }}" type="radio" name="variant_id" value="{{ variant.pk }}" data-price="{{ variant.price|currency }}" data-regular-price="{% if variant.is_on_sale %}{{ variant.regular_price|currency }}{% endif %}" data-discount-percent="{{ variant.discount_percent }}"{% if forloop.first %} checked{% endif %}>
+                        <label for="variant-{{ variant.pk }}">
+                            <strong>{{ variant.volume_ml }} мл</strong>
+                            <span>{{ variant.price|currency }}</span>
+                        </label>
+                        {% endfor %}
+                    </fieldset>
+                    {% endif %}
+                    <button class="btn btn-gold" type="submit">Додати до кошика</button>
+                    <div class="product-detail__cart-helper">Безкоштовна доставка від 1500 грн</div>
+                </form>
             </div>
         </article>
+
+        {% if related_perfumes %}
+        <section class="product-detail__related">
+            <div class="section-header product-detail__related-header">
+                <span class="eyebrow">Curated picks</span>
+                <h2>Вам також може сподобатись</h2>
+            </div>
+            <div class="product-grid product-grid--compact">
+                {% for related_perfume in related_perfumes %}
+                {% include 'includes/product_card.html' with perfume=related_perfume %}
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
     </div>
 </section>
 {% endblock %}

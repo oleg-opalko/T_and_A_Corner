@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Реєстрація{% endblock %}
+
+{% block content %}
+<section class="site-main--inner">
+    <div class="container auth-layout">
+        <div class="auth-card">
+            <span class="eyebrow">Створіть аккаунт</span>
+            <h1>Реєстрація</h1>
+            <form method="post" class="auth-form">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                <div class="form-field">
+                    <label for="id_username">Ім’я користувача</label>
+                    {{ form.username }}
+                    {{ form.username.errors }}
+                </div>
+                <div class="form-field">
+                    <label for="id_email">Email</label>
+                    {{ form.email }}
+                    {{ form.email.errors }}
+                </div>
+                <div class="form-field">
+                    <label for="id_password1">Пароль</label>
+                    {{ form.password1 }}
+                    {{ form.password1.errors }}
+                </div>
+                <div class="form-field">
+                    <label for="id_password2">Повторіть пароль</label>
+                    {{ form.password2 }}
+                    {{ form.password2.errors }}
+                </div>
+                <button type="submit" class="btn btn-gold">Зареєструватися</button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

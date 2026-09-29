@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load shop_tags %}
+
+{% block title %}Кошик{% endblock %}
+
+{% block content %}
+<section class="site-main--inner">
+    <div class="container cart-page">
+        <h1 class="page-title">Ваш кошик</h1>
+        {% if items %}
+        <div class="cart-layout">
+            <div class="cart-items">
+                {% for item in items %}
+                <article class="cart-item">
+                    <a href="{{ item.perfume.get_absolute_url }}" class="cart-item__image">
+                        {% if item.perfume.image_url %}
+                        <img src="{{ item.perfume.image_url }}" alt="{{ item.perfume.name }}">
+                        {% else %}
+                        <div class="product-card__placeholder" aria-hidden="true"></div>
+                        {% endif %}
+                    </a>
+                    <div class="cart-item__info">
+                        <p>{{ item.perfume.brand.name }}</p>
+                        <h2><a href="{{ item.perfume.get_absolute_url }}">{{ item.perfume.name }}</a></h2>
+                        <span>{% if item.variant %}{{ item.variant.volume_ml }}{% else %}{{ item.perfume.volume_ml }}{% endif %} ml · {{ item.perfume.product_type }}</span>
+                    </div>
+                    <form method="post" action="{% url 'shop:cart_update' item.cart_key %}" class="cart-item__quantity">
+                        {% csrf_token %}
+                        <label for="quantity-{{ item.cart_key }}">Кількість</label>
+                        <input id="quantity-{{ item.cart_key }}" name="quantity" type="number" min="0" max="99" value="{{ item.quantity }}">
+                        <button type="submit">Оновити</button>
+                    </form>
+                    <div class="cart-item__price">
+                        <strong>{{ item.subtotal|currency }}</strong>
+                        <form method="post" action="{% url 'shop:cart_remove' item.cart_key %}">
+                            {% csrf_token %}
+                            <button type="submit" class="text-button">Видалити</button>
+                        </form>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+            <aside class="cart-summary">
+                <h2>Підсумок замовлення</h2>
+                <p><span>Сума товарів</span><strong>{{ total|currency }}</strong></p>
+                <p class="cart-summary__note">Вартість доставки та оплати буде розрахована під час оформлення.</p>
+                <a href="{% url 'shop:checkout' %}" class="btn btn-gold">Оформити замовлення</a>
+                <a href="{% url 'shop:catalog' %}" class="link-arrow">Продовжити покупки</a>
+            </aside>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <p>Ваш кошик порожній.</p>
+            <a href="{% url 'shop:catalog' %}" class="btn btn-gold">Переглянути аромати</a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

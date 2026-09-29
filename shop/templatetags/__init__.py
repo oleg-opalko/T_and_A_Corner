@@ -1,11 +1,10 @@
 from django import template
 
+from shop.formatting import format_uah
+
 register = template.Library()
 
 
 @register.filter
 def currency(value):
-    try:
-        return f'${value:,.2f}'
-    except (TypeError, ValueError):
-        return value
+    return format_uah(value)

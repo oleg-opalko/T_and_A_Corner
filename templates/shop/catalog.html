@@ -1,20 +1,59 @@
 {% extends 'base.html' %}
 {% load shop_tags %}
 
-{% block title %}Catalog{% endblock %}
+{% block title %}Каталог{% endblock %}
 
 {% block content %}
 <section class="site-main--inner">
     <div class="container">
-        <h1 class="page-title" id="collection">Our Collection</h1>
+        <h1 class="page-title" id="collection">Наша колекція</h1>
 
-        {% if categories %}
-        <nav class="category-nav">
-            {% for category in categories %}
-            <a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
-            {% endfor %}
-        </nav>
-        {% endif %}
+        <form method="get" class="catalog-filters" aria-label="Фільтри каталогу">
+            <div class="catalog-filter">
+                <label for="catalog-category">Категорія</label>
+                <select id="catalog-category" name="category">
+                    <option value="">Усі категорії</option>
+                    {% for category in categories %}
+                    <option value="{{ category.slug }}"{% if filters.category == category.slug %} selected{% endif %}>{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="catalog-filter">
+                <label for="catalog-brand">Бренд</label>
+                <select id="catalog-brand" name="brand">
+                    <option value="">Усі бренди</option>
+                    {% for brand in brands %}
+                    <option value="{{ brand.slug }}"{% if filters.brand == brand.slug %} selected{% endif %}>{{ brand.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="catalog-filter catalog-filter--price">
+                <label>Ціна</label>
+                <div>
+                    <input type="number" name="price_min" min="0" step="1" placeholder="Від" value="{{ filters.price_min }}">
+                    <input type="number" name="price_max" min="0" step="1" placeholder="До" value="{{ filters.price_max }}">
+                </div>
+            </div>
+
+            <div class="catalog-filter">
+                <label for="catalog-sort">Сортування</label>
+                <select id="catalog-sort" name="sort">
+                    <option value="newest"{% if filters.sort == 'newest' %} selected{% endif %}>Новинки</option>
+                    <option value="price_asc"{% if filters.sort == 'price_asc' %} selected{% endif %}>Спочатку дешевші</option>
+                    <option value="price_desc"{% if filters.sort == 'price_desc' %} selected{% endif %}>Спочатку дорожчі</option>
+                    <option value="name"{% if filters.sort == 'name' %} selected{% endif %}>За назвою</option>
+                </select>
+            </div>
+
+            <div class="catalog-filter__actions">
+                <button type="submit" class="btn btn-gold">Застосувати</button>
+                <a href="{% url 'shop:catalog' %}" class="btn btn-text">Скинути</a>
+            </div>
+        </form>
+
+        <p class="catalog-count">Знайдено товарів: {{ perfumes|length }}</p>
 
         {% if perfumes %}
         <div class="product-grid">
@@ -23,7 +62,10 @@
             {% endfor %}
         </div>
         {% else %}
-        <p class="empty-state">No fragrances available yet. Add products via the <a href="/admin/">admin panel</a>.</p>
+        <div class="empty-state">
+            <p>За цими фільтрами ароматів не знайдено.</p>
+            <a href="{% url 'shop:catalog' %}" class="btn btn-gold">Скинути фільтри</a>
+        </div>
         {% endif %}
     </div>
 </section>
