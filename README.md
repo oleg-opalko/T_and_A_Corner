@@ -20,6 +20,8 @@ python manage.py createsuperuser
 python manage.py runserver
 ```
 
+Перед запуском скопіюйте `.env.example` у `.env`. Для локальної розробки проєкт використовує SQLite.
+
 Сайт: http://127.0.0.1:8000/  
 Адмін-панель: http://127.0.0.1:8000/admin/
 
@@ -99,3 +101,15 @@ media/                     # Завантажені файли (товари, л
 - Пошук і фільтри
 - Fragrance Guide quiz
 - Newsletter (збереження email у базу)
+
+## Публікація на Wasmer Edge
+
+Проєкт розпізнається Wasmer як Django-додаток за `manage.py` та `requirements.txt`.
+
+1. Запуште репозиторій у GitHub або встановіть [Wasmer CLI](https://docs.wasmer.io/install/) і виконайте `wasmer login`.
+2. Запустіть `wasmer deploy` у корені репозиторію та завершіть кроки CLI для створення застосунку.
+3. У налаштуваннях застосунку Wasmer задайте секрет `SECRET_KEY` (згенеруйте окремий випадковий ключ) та `DEBUG=False`.
+4. Під'єднайте керовану PostgreSQL-базу. Wasmer передає `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USERNAME`, `DB_PASSWORD`; Django використовує їх автоматично.
+5. Після першого деплою застосуйте міграції командою `python manage.py migrate` у терміналі застосунку, якщо платформа не виконала їх автоматично.
+
+`collectstatic` обслуговується через WhiteNoise. SQLite годиться лише для локальної розробки; завантажені файли зберігаються в локальному `media/` і потребують окремого постійного сховища для production. SMTP, LiqPay і Nova Poshta credentials задаються як змінні середовища Wasmer, а не комітяться в репозиторій.
