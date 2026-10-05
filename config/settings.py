@@ -1,7 +1,6 @@
 from pathlib import Path
 
 import environ
-from django.core.exceptions import ImproperlyConfigured
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,9 +24,6 @@ CSRF_TRUSTED_ORIGINS += [
     'https://*.ngrok.io',
     'https://*.wasmer.app',
 ]
-
-if not DEBUG and SECRET_KEY == 'django-insecure-dev-key-change-before-production':
-    raise ImproperlyConfigured('Set SECRET_KEY in the production environment.')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
