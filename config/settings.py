@@ -6,7 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 env = environ.Env(
     DEBUG=(bool, False),
-    ALLOWED_HOSTS=(list, ['localhost', '127.0.0.1', '.wasmer.app']),
+    ALLOWED_HOSTS=(list, ['localhost', '127.0.0.1', '.wasmer.app', 'www.tacorner.pp.ua']),
 )
 
 environ.Env.read_env(BASE_DIR / '.env')
@@ -15,7 +15,7 @@ SECRET_KEY = env('SECRET_KEY', default='django-insecure-dev-key-change-before-pr
 DEBUG = env('DEBUG')
 ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 
-ALLOWED_HOSTS += ['.ngrok-free.app', '.ngrok.io', '.wasmer.app']
+ALLOWED_HOSTS += ['.ngrok-free.app', '.ngrok.io', '.wasmer.app', 'www.tacorner.pp.ua']
 
 CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', default=[])
 
