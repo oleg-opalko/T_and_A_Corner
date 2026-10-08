@@ -80,7 +80,7 @@ class Perfume(TimeStampedModel):
     notes_top = models.CharField('Топ-ноти', max_length=255, blank=True)
     notes_middle = models.CharField('Середні ноти', max_length=255, blank=True)
     notes_base = models.CharField('Базові ноти', max_length=255, blank=True)
-    image = models.ImageField('Зображення', upload_to='perfumes/', blank=True)
+    image = models.ImageField('Зображення', upload_to='perfumes/', max_length=500, blank=True)
     gallery = models.JSONField('Галерея', blank=True, default=list)
     is_available = models.BooleanField('В наявності', default=True)
     is_featured = models.BooleanField('На головній', default=False)
