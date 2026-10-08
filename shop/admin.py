@@ -267,3 +267,5 @@ class OrderAdmin(admin.ModelAdmin):
             ])
 
         return response
+
+
