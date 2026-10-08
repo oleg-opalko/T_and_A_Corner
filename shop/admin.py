@@ -267,4 +267,3 @@ class OrderAdmin(admin.ModelAdmin):
             ])
 
         return response
-    #TODO test build 15
